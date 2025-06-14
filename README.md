@@ -1,8 +1,16 @@
-# TFI_AgendaContactos
-**Codigo** 
-Agenda de Contactos
-**Funcion**
-Este programa cumple la funcion de crear una agenda de contactos, donde se le pregunta al usuario si es qué quiere añadir a una persona y de ahí le pide la informacion (Nombre, numero de telefono, email).
-**Integrantes**
-Grossetti,Ignacio Arturo      ROLE: Developer
-Hotchkyss,Gerson Tomas        ROLE: Developer 
+# TFI_AgendaContactos 
+
+Este proyecto tiene como finalidad implementar una agenda de contactos simple utilizando el lenguaje C.
+Esta diseñada para ejecutarse por consola y permite gestionar una lista de contactos con funciones de agregar, eliminar, buscar, modificar, ordenar y guardar en un fichero.
+
+---
+
+## Integrantes
+
+**Grossetti, Ignacio Arturo**: Developer
+**Hotchkyss, Gersom Tomás**: Developer 
+
+## Características
+
+
+
