@@ -76,6 +76,51 @@ void eliminarContacto(struct Contacto** cabeza, char nombre[]) {
     free(actual);
     printf("Contacto eliminado.\n");
 }
+void cambiarContacto (struct Contacto* cabeza, char nombre[]){
+    while (cabeza!=NULL)
+    {
+        if (strcmp(cabeza->nombre, nombre) == 0){
+            printf("Nuevo nombre\n");
+            scanf("%s",cabeza->nombre);
+            printf("Nuevo telefono\n");
+            scanf("%s",cabeza->telefono);
+            printf("Nuevo Email\n");
+            scanf("%s",cabeza->email);
+            printf("Contacto modificado\n");
+            return;
+        }
+        cabeza=cabeza->siguiente; 
+    }
+    printf("Contacto no encontrado\n");
+}
+void eliminarTodosContactos(struct Contacto* cabeza){
+    struct Contacto* temp;
+    while (cabeza!=NULL)
+    {
+        temp=cabeza;
+        cabeza = cabeza->siguiente;
+        free(temp);
+    }
+}
+void guardarAgenda(struct Contacto* cabeza){
+    FILE *archivo =  fopen("Agenda.txt","a");
+    while(cabeza != NULL){
+        fprintf(archivo,"%s %s %s",cabeza->nombre,cabeza->telefono,cabeza->email);
+        cabeza=cabeza->siguiente;
+    }
+    fclose(archivo);
+}
+void cargarAgenda(struct Contacto* cabeza){
+    FILE *archivo = fopen("Agenda.txt","r");
+    if(archivo == NULL){
+        return;
+    }
+    char ch;
+    while ((ch = fgetc(archivo)) != EOF) {
+        putchar(ch);
+    }
+}
+
 
 int main() {
 
