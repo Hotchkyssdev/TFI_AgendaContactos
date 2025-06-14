@@ -7,7 +7,7 @@ Esta diseñada para ejecutarse por consola y permite gestionar una lista de cont
 
 ## Integrantes
 
-- **Grossetti, Ignacio Arturo**: Developer. (Alias: lojack01)
+- **Grossetti, Ignacio Arturo**: Developer. (Alias: lojack0101)
 - **Hotchkyss, Gersom Tomás**: Developer.
 
 ## Características
