@@ -76,53 +76,129 @@ void eliminarContacto(struct Contacto** cabeza, char nombre[]) {
     free(actual);
     printf("Contacto eliminado.\n");
 }
+
 void cambiarContacto (struct Contacto* cabeza, char nombre[]){
-    while (cabeza!=NULL)
-    {
+    while (cabeza != NULL) {
         if (strcmp(cabeza->nombre, nombre) == 0){
-            printf("Nuevo nombre\n");
+            printf("Nuevo nombre: ");
             scanf("%s",cabeza->nombre);
-            printf("Nuevo telefono\n");
+            printf("\n");
+            printf("Nuevo telefono: ");
             scanf("%s",cabeza->telefono);
-            printf("Nuevo Email\n");
+            printf("\n");
+            printf("Nuevo Email: ");
             scanf("%s",cabeza->email);
+            printf("\n");
             printf("Contacto modificado\n");
             return;
         }
-        cabeza=cabeza->siguiente; 
+        cabeza = cabeza->siguiente; 
     }
     printf("Contacto no encontrado\n");
 }
-void eliminarTodosContactos(struct Contacto* cabeza){
+
+void liberarAgenda(struct Contacto* cabeza){
     struct Contacto* temp;
-    while (cabeza!=NULL)
-    {
-        temp=cabeza;
+    while (cabeza != NULL) {
+        temp = cabeza;
         cabeza = cabeza->siguiente;
         free(temp);
     }
 }
+
 void guardarAgenda(struct Contacto* cabeza){
-    FILE *archivo =  fopen("Agenda.txt","a");
+    FILE *archivo =  fopen("agenda.txt", "w");
     while(cabeza != NULL){
-        fprintf(archivo,"%s %s %s",cabeza->nombre,cabeza->telefono,cabeza->email);
-        cabeza=cabeza->siguiente;
+        fprintf(archivo,"%s | %s | %s\n", cabeza->nombre, cabeza->telefono, cabeza->email);
+        cabeza = cabeza->siguiente;
     }
     fclose(archivo);
 }
-void cargarAgenda(struct Contacto* cabeza){
-    FILE *archivo = fopen("Agenda.txt","r");
-    if(archivo == NULL){
+
+void cargarAgenda(struct Contacto** cabeza){
+    FILE *archivo = fopen("agenda.txt", "r");
+    char linea[150], nombre[50], telefono[15], email[50];
+    char* token = strtok(linea, "|");
+
+    if (archivo == NULL){
         return;
     }
-    char ch;
-    while ((ch = fgetc(archivo)) != EOF) {
-        putchar(ch);
+
+    while (fgets(linea, sizeof(linea), archivo)) {
+        linea[strcspn(linea, "\n")] = 0;
+        strcpy(nombre, token);
+        token = strtok(NULL, "|");
+        strcpy(telefono, token);
+        token = strtok(NULL, "|");
+        strcpy(email, token);
+        token = strtok(NULL, "|");
+        insertarOrdenado(cabeza, nombre, telefono, email);
     }
+    fclose(archivo);
 }
 
-
 int main() {
+    struct Contacto* agenda = NULL;
+    int opcion;
+    char nombre[50], telefono[15], email[50];
 
+    cargarAgenda(&agenda);
+
+    do {
+        printf("Menu de Agenda de Contactos:\n");
+        printf("1. Insertar contacto\n");
+        printf("2. Mostrar contactos\n");
+        printf("3. Buscar contacto\n");
+        printf("4. Eliminar contacto\n");
+        printf("5. Modificar contacto\n");
+        printf("6. Guardar agenda\n");
+        printf("7. Salir\n");
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                printf("\nIngrese nombre: ");
+                scanf("%s", nombre);
+                printf("Ingrese telefono: ");
+                scanf("%s", telefono);
+                printf("Ingrese email: ");
+                scanf("%s", email);
+                insertarOrdenado(&agenda, nombre, telefono, email);
+                printf("Contacto insertado.\n");
+                break;
+            case 2:
+                printf("\nContactos en la agenda:\n");
+                mostrarContactos(agenda);
+                break;
+            case 3:
+                printf("\nIngrese nombre a buscar: ");
+                scanf("%s", nombre);
+                buscarContacto(agenda, nombre);
+                break;
+            case 4:
+                printf("\nIngrese nombre a eliminar: ");
+                scanf("%s", nombre);
+                eliminarContacto(&agenda, nombre);
+                break;
+            case 5:
+                printf("\nIngrese nombre a modificar: ");
+                scanf("%s", nombre);
+                cambiarContacto(agenda, nombre);
+                break;
+            case 6:
+                guardarAgenda(agenda);
+                printf("\nAgenda guardada.\n");
+                break;
+            case 7:
+                printf("\nSaliendo del programa.\n");
+                break;
+            default:
+                printf("\nOpcion no valida. Intente de nuevo.\n");
+                break;
+        }
+    } while (opcion != 7);;
+
+    liberarAgenda(agenda);
     return 0;
 }
