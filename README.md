@@ -21,8 +21,10 @@ Esta diseñada para ejecutarse por consola y permite gestionar una lista de cont
 
 ## Estructura del Proyecto
 
-- **'AgendaContactos.c'**: Código fuente principal
-- **'agenda.txt'**: Fichero de almacenamiento de contactos
+- **'Main.c'**: Código fuente principal.
+- **'contacto.h'**:Encabezado con la definición de la estructura Contacto y las declaraciones de funciones.
+- **'contacto.c'**: Archivo con la implementación de todas las funciones relacionadas con la gestión de contactos.
+- **'agenda.txt'**: Fichero de almacenamiento de contactos.
 
 ## Cómo ejecutar
 
