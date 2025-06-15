@@ -28,7 +28,7 @@ Esta diseñada para ejecutarse por consola y permite gestionar una lista de cont
 
 1. **Compilar:**
 
-'gcc AgendaContactos.c -o agenda'
+'gcc main.c contacto.c -o agenda'
 
 './agenda'
 
