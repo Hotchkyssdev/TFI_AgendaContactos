@@ -118,7 +118,7 @@ void guardarAgenda(struct Contacto* cabeza){
 void cargarAgenda(struct Contacto** cabeza){
     FILE *archivo = fopen("agenda.txt", "r");
     char linea[150], nombre[50], telefono[15], email[50];
-    char* token = strtok(linea, "|");
+    char* token;
 
     if (archivo == NULL){
         return;
@@ -126,6 +126,7 @@ void cargarAgenda(struct Contacto** cabeza){
 
     while (fgets(linea, sizeof(linea), archivo)) {
         linea[strcspn(linea, "\n")] = 0;
+        token = strtok(linea, "|");
         strcpy(nombre, token);
         token = strtok(NULL, "|");
         strcpy(telefono, token);
