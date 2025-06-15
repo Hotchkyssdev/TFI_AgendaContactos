@@ -1,4 +1,4 @@
-#ifdef CONTACTO_H
+#ifndef CONTACTO_H
 #define CONTACTO_H
 
 struct Contacto {
