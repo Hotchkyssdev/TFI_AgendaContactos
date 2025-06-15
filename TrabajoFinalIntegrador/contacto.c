@@ -3,8 +3,6 @@
 #include <string.h>
 #include "contacto.h"
 
-
-
 struct Contacto* crearContacto(char nombre[], char telefono[], char email[]) {
     struct Contacto* nuevoContacto = (struct Contacto*) malloc(sizeof(struct Contacto));
     strcpy(nuevoContacto->nombre, nombre);

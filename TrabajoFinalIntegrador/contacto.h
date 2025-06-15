@@ -8,6 +8,7 @@ struct Contacto {
     struct Contacto* siguiente;
 };
 
+//Funciones
 struct Contacto* crearContacto(char nombre[], char telefono[], char email[]);
 void insertarOrdenado(struct Contacto** cabeza, char nombre[], char telefono[], char email[]);
 void mostrarContactos(struct Contacto* cabeza);
@@ -17,8 +18,5 @@ void cambiarContacto (struct Contacto* cabeza, char nombre[]);
 void liberarAgenda(struct Contacto* cabeza);
 void guardarAgenda(struct Contacto* cabeza);
 void cargarAgenda(struct Contacto** cabeza);
-
-
-
 
 #endif

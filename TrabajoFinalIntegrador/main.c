@@ -3,8 +3,6 @@
 #include <string.h>
 #include "contacto.h"
 
-
-
 int main() {
     struct Contacto* agenda = NULL;
     int opcion;
