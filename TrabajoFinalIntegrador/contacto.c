@@ -71,18 +71,21 @@ void eliminarContacto(struct Contacto** cabeza, char nombre[]) {
     printf("Contacto eliminado.\n");
 }
 
-void cambiarContacto (struct Contacto* cabeza, char nombre[]){
+void cambiarContacto(struct Contacto* cabeza, char nombre[]) {
     while (cabeza != NULL) {
-        if (strcmp(cabeza->nombre, nombre) == 0){
+        if (strcmp(cabeza->nombre, nombre) == 0) {
             printf("Nuevo nombre: ");
-            scanf("%s",cabeza->nombre);
-            printf("\n");
+            fgets(cabeza->nombre, sizeof(cabeza->nombre), stdin);
+            cabeza->nombre[strcspn(cabeza->nombre, "\n")] = 0;
+
             printf("Nuevo telefono: ");
-            scanf("%s",cabeza->telefono);
-            printf("\n");
+            fgets(cabeza->telefono, sizeof(cabeza->telefono), stdin);
+            cabeza->telefono[strcspn(cabeza->telefono, "\n")] = 0;
+
             printf("Nuevo Email: ");
-            scanf("%s",cabeza->email);
-            printf("\n");
+            fgets(cabeza->email, sizeof(cabeza->email), stdin);
+            cabeza->email[strcspn(cabeza->email, "\n")] = 0;
+
             printf("Contacto modificado\n");
             return;
         }
@@ -91,7 +94,7 @@ void cambiarContacto (struct Contacto* cabeza, char nombre[]){
     printf("Contacto no encontrado\n");
 }
 
-void liberarAgenda(struct Contacto* cabeza){
+void liberarAgenda(struct Contacto* cabeza) {
     struct Contacto* temp;
     while (cabeza != NULL) {
         temp = cabeza;
@@ -100,34 +103,38 @@ void liberarAgenda(struct Contacto* cabeza){
     }
 }
 
-void guardarAgenda(struct Contacto* cabeza){
-    FILE *archivo =  fopen("agenda.txt", "w");
-    while(cabeza != NULL){
-        fprintf(archivo,"%s | %s | %s\n", cabeza->nombre, cabeza->telefono, cabeza->email);
+void guardarAgenda(struct Contacto* cabeza) {
+    FILE* archivo = fopen("agenda.txt", "w");
+    while (cabeza != NULL) {
+        fprintf(archivo, "%s | %s | %s\n", cabeza->nombre, cabeza->telefono, cabeza->email);
         cabeza = cabeza->siguiente;
     }
     fclose(archivo);
 }
 
-void cargarAgenda(struct Contacto** cabeza){
-    FILE *archivo = fopen("agenda.txt", "r");
+void cargarAgenda(struct Contacto** cabeza) {
+    FILE* archivo = fopen("agenda.txt", "r");
     char linea[150], nombre[50], telefono[15], email[50];
     char* token;
 
-    if (archivo == NULL){
-        return;
-    }
+    if (archivo == NULL) return;
 
     while (fgets(linea, sizeof(linea), archivo)) {
         linea[strcspn(linea, "\n")] = 0;
         token = strtok(linea, "|");
-        strcpy(nombre, token);
-        token = strtok(NULL, "|");
-        strcpy(telefono, token);
-        token = strtok(NULL, "|");
-        strcpy(email, token);
-        token = strtok(NULL, "|");
+        if (token) {
+            strcpy(nombre, token);
+            token = strtok(NULL, "|");
+        }
+        if (token) {
+            strcpy(telefono, token);
+            token = strtok(NULL, "|");
+        }
+        if (token) {
+            strcpy(email, token);
+        }
         insertarOrdenado(cabeza, nombre, telefono, email);
     }
+
     fclose(archivo);
 }

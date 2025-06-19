@@ -7,7 +7,6 @@ int main() {
     struct Contacto* agenda = NULL;
     int opcion;
     char nombre[50], telefono[15], email[50];
-
     cargarAgenda(&agenda);
 
     do {
@@ -21,15 +20,22 @@ int main() {
         printf("7. Salir\n");
         printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
+        getchar();
 
         switch (opcion) {
             case 1:
                 printf("\nIngrese nombre: ");
-                scanf("%s", nombre);
+                fgets(nombre, sizeof(nombre), stdin);
+                nombre[strcspn(nombre, "\n")] = 0;
+
                 printf("Ingrese telefono: ");
-                scanf("%s", telefono);
+                fgets(telefono, sizeof(telefono), stdin);
+                telefono[strcspn(telefono, "\n")] = 0;
+
                 printf("Ingrese email: ");
-                scanf("%s", email);
+                fgets(email, sizeof(email), stdin);
+                email[strcspn(email, "\n")] = 0;
+
                 insertarOrdenado(&agenda, nombre, telefono, email);
                 printf("Contacto insertado.\n");
                 break;
@@ -39,17 +45,20 @@ int main() {
                 break;
             case 3:
                 printf("\nIngrese nombre a buscar: ");
-                scanf("%s", nombre);
+                fgets(nombre, sizeof(nombre), stdin);
+                nombre[strcspn(nombre, "\n")] = 0;
                 buscarContacto(agenda, nombre);
                 break;
             case 4:
                 printf("\nIngrese nombre a eliminar: ");
-                scanf("%s", nombre);
+                fgets(nombre, sizeof(nombre), stdin);
+                nombre[strcspn(nombre, "\n")] = 0;
                 eliminarContacto(&agenda, nombre);
                 break;
             case 5:
                 printf("\nIngrese nombre a modificar: ");
-                scanf("%s", nombre);
+                fgets(nombre, sizeof(nombre), stdin);
+                nombre[strcspn(nombre, "\n")] = 0;
                 cambiarContacto(agenda, nombre);
                 break;
             case 6:
@@ -63,7 +72,7 @@ int main() {
                 printf("\nOpcion no valida. Intente de nuevo.\n");
                 break;
         }
-    } while (opcion != 7);;
+    } while (opcion != 7);
 
     liberarAgenda(agenda);
     return 0;
